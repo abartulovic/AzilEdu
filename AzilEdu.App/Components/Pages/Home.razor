@@ -1,6 +1,61 @@
 ﻿@page "/"
 
-<PageTitle>Azil za životinje</PageTitle>
 
-<h1>Dobro došli!</h1>
+<MudStack Spacing="4">
+    <MudText Typo="Typo.h3" GutterBottom="true">
+        Dobro došli u AzilEdu
+    </MudText>
 
+    <MudText Typo="Typo.body1">
+        Ova aplikacija služi za evidenciju životinja, smještaja i udomitelja.
+    </MudText>
+
+    <MudGrid>
+        <MudItem xs="12" md="4">
+            <MudPaper Class="pa-4" Elevation="2">
+                <MudText Typo="Typo.h5" Color="Color.Primary">
+                    Animals
+                </MudText>
+                <MudText Typo="Typo.body2">
+                    Pregled životinja u azilu.
+                </MudText>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudPaper Class="pa-4" Elevation="2">
+                <MudText Typo="Typo.h5" Color="Color.Primary">
+                    Species
+                </MudText>
+                <MudText Typo="Typo.body2">
+                    Vrste životinja u sustavu.
+                </MudText>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" md="4">
+            <MudPaper Class="pa-4" Elevation="2">
+                <MudText Typo="Typo.h5" Color="Color.Primary">
+                    Adopters
+                </MudText>
+                <MudText Typo="Typo.body2">
+                    Osobe koje udomljavaju životinje.
+                </MudText>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+
+    <MudStack Row="true" Spacing="2">
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   StartIcon="@Icons.Material.Filled.Add">
+            Nova životinja
+        </MudButton>
+
+        <MudButton Variant="Variant.Outlined"
+                   Color="Color.Secondary"
+                   StartIcon="@Icons.Material.Filled.List">
+            Pregled vrsta
+        </MudButton>
+    </MudStack>
+</MudStack>

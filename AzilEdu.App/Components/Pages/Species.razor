@@ -1,0 +1,70 @@
+﻿@page "/species"
+
+
+<MudStack Spacing="3">
+    <MudStack Row="true"
+              Justify="Justify.SpaceBetween"
+              AlignItems="AlignItems.Center">
+        <MudText Typo="Typo.h4">Species</MudText>
+
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   StartIcon="@Icons.Material.Filled.Add">
+            Add Species
+        </MudButton>
+        
+    </MudStack>
+
+    <MudText Typo="Typo.body1">
+        Ovdje se prikazuju vrste životinja koje koristimo u sustavu.
+    </MudText>
+
+    <MudPaper Class="pa-4" Elevation="2">
+        <MudText Typo="Typo.h6" GutterBottom="true">Species Table</MudText>
+
+        <MudSimpleTable Dense="true" Hover="true" Striped="true" Bordered="true">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Typical Animal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Dog</td>
+                    <td>Domaći pas</td>
+                    <td>Rex</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Cat</td>
+                    <td>Domaća mačka</td>
+                    <td>Maza</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Bird</td>
+                    <td>Ptica</td>
+                    <td>Kiki</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Rabbit</td>
+                    <td>Zec</td>
+                    <td>Lili</td>
+                </tr>
+            </tbody>
+        </MudSimpleTable>
+    </MudPaper>
+
+    <MudPaper Class="pa-4" Outlined="true">
+        <MudText Typo="Typo.h6">Napomena</MudText>
+        <MudText Typo="Typo.body2">Trenutno prikazujemo 4 vrste.</MudText>
+        <MudText Typo="Typo.body2">
+            Ova stranica služi za pregled vrsta koje koristimo u evidenciji životinja.
+        </MudText>
+    </MudPaper>
+</MudStack>

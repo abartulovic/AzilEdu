@@ -1,0 +1,854 @@
+﻿@page "/predavanje-2"
+@using MudBlazor
+@inject IJSRuntime JS
+@inject ISnackbar Snackbar
+
+<MudContainer MaxWidth="MaxWidth.False" Class="pa-6">
+    <MudPaper Class="pa-4" Elevation="2">
+        <MudImage Src="images/dog.jpg"
+                  Alt="Pas Rex"
+                  Width="250"
+                  Class="mb-2" />
+
+        <MudText Typo="Typo.h6">Merimo</MudText>
+        <MudText Typo="Typo.body2">
+            Pas star 13 godina, puno laje i ne grize.
+        </MudText>
+
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   Class="mt-2">
+            Detalji
+        </MudButton>
+    </MudPaper>
+    
+    <MudImage Src="images/dog.jpg" Alt="Pas u azilu" />
+
+
+
+    <MudTable Items="_species">
+        <HeaderContent>
+            <MudTh>Id</MudTh>
+            <MudTh>Name</MudTh>
+            <MudTh>Description</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd>@context.Id</MudTd>
+            <MudTd>@context.Name</MudTd>
+            <MudTd>@context.Description</MudTd>
+        </RowTemplate>
+    </MudTable>
+    <hr />
+    <MudTable Items="_species">
+  <HeaderContent>
+      <MudTh>Name</MudTh>
+  </HeaderContent>
+  <RowTemplate>
+      <MudTd>@context.Name</MudTd>
+  </RowTemplate>
+</MudTable>
+
+<MudTable Items="_species" Dense="true" Hover="true" Striped="true">
+  <HeaderContent>
+      <MudTh>Id</MudTh>
+      <MudTh>Name</MudTh>
+      <MudTh>Description</MudTh>
+  </HeaderContent>
+  <RowTemplate>
+      <MudTd>@context.Id</MudTd>
+      <MudTd>@context.Name</MudTd>
+      <MudTd>@context.Description</MudTd>
+  </RowTemplate>
+</MudTable>
+
+<MudTable Items="_species" Bordered="true">
+  <HeaderContent>
+      <MudTh>Id</MudTh>
+      <MudTh>Name</MudTh>
+  </HeaderContent>
+  <RowTemplate>
+      <MudTd>@context.Id</MudTd>
+      <MudTd>@context.Name</MudTd>
+  </RowTemplate>
+</MudTable>
+
+
+    <MudStack Row="true" Spacing="2">
+        <MudButton Variant="Variant.Filled" Color="Color.Primary">
+            Add Species
+        </MudButton>
+
+        <MudButton Variant="Variant.Outlined" Color="Color.Secondary">
+            Pregled vrsta
+        </MudButton>
+
+        <MudButton Variant="Variant.Text" Color="Color.Info">
+            Saznaj više
+        </MudButton>
+
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Success"
+                   Size="Size.Large"
+                   StartIcon="@Icons.Material.Filled.Check">
+            Spremi
+        </MudButton>
+    </MudStack>
+
+
+    <MudButton>Dodaj</MudButton>
+    <MudGrid>
+        <MudItem xs="12" md="6">
+            <MudPaper Class="pa-4">Animals</MudPaper>
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudPaper Class="pa-4">Species</MudPaper>
+        </MudItem>
+    </MudGrid>
+
+    <MudGrid>
+        <MudItem xs="12" md="4">
+            <MudPaper Class="pa-4">Animals</MudPaper>
+        </MudItem>
+        <MudItem xs="12" md="4">
+            <MudPaper Class="pa-4">Species</MudPaper>
+        </MudItem>
+        <MudItem xs="12" md="4">
+            <MudPaper Class="pa-4">Adopters</MudPaper>
+        </MudItem>
+    </MudGrid>
+
+    <MudGrid>
+        <MudItem xs="12" md="8">
+            <MudPaper Class="pa-4">Glavni sadržaj</MudPaper>
+        </MudItem>
+        <MudItem xs="12" md="4">
+            <MudPaper Class="pa-4">Bočni sadržaj</MudPaper>
+        </MudItem>
+    </MudGrid>
+
+    <MudGrid>
+        <MudItem xs="12" md="4">
+            <MudPaper Class="pa-4">Prva kartica</MudPaper>
+        </MudItem>
+        <MudItem xs="12" md="4">
+            <MudPaper Class="pa-4">Druga kartica</MudPaper>
+        </MudItem>
+        <MudItem xs="12" md="4">
+            <MudPaper Class="pa-4">Treća kartica</MudPaper>
+        </MudItem>
+    </MudGrid>
+
+
+    <MudStack Spacing="2">
+        <MudText Typo="Typo.h5">Animals</MudText>
+        <MudText Typo="Typo.body2">Popis životinja u azilu.</MudText>
+    </MudStack>
+
+    <MudStack Row="true" Spacing="2">
+        <MudButton Color="Color.Primary">Dodaj</MudButton>
+        <MudButton Variant="Variant.Outlined">Pregled</MudButton>
+    </MudStack>
+
+    <MudStack Row="true"
+              Justify="Justify.SpaceBetween"
+              AlignItems="AlignItems.Center">
+        <MudText Typo="Typo.h4">Species</MudText>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary">
+            Add Species
+        </MudButton>
+    </MudStack>
+
+    <MudStack Spacing="3">
+        <MudText Typo="Typo.h4">Species</MudText>
+        <MudText Typo="Typo.body1">Vrste životinja u sustavu.</MudText>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary">
+            Add Species
+        </MudButton>
+    </MudStack>
+
+
+    <MudText Typo="Typo.h4" GutterBottom="true">
+        Species
+    </MudText>
+
+    <MudText Typo="Typo.body1" Align="Align.Center">
+        Dobro došli u AzilEdu
+    </MudText>
+
+    <MudStack Spacing="2">
+        <MudPaper Class="pa-4">
+            <MudText Typo="Typo.h6">Species</MudText>
+        </MudPaper>
+
+        <MudPaper Class="pa-4" Elevation="4">
+            <MudText Typo="Typo.h6">Adopters</MudText>
+        </MudPaper>
+
+        <MudPaper Class="pa-4" Outlined="true">
+            <MudText Typo="Typo.h6">Housing Units</MudText>
+        </MudPaper>
+
+        <MudPaper Class="pa-6">
+            <MudText Typo="Typo.h5">Animals</MudText>
+            <MudText Typo="Typo.body2">Kartica s više unutarnjeg razmaka.</MudText>
+        </MudPaper>
+    </MudStack>
+
+    <MudStack Spacing="4">
+
+
+
+        <MudPaper Class="pa-8" Elevation="3">
+            <MudStack Spacing="2">
+                <MudChip T="string" Color="Color.Primary" Variant="Variant.Filled" Size="Size.Medium">
+                    AzilEdu • Predavanje 2
+                </MudChip>
+                <MudText Typo="Typo.h2">MudBlazor setup, layout i navigacija</MudText>
+                <MudText Typo="Typo.h6" Color="Color.Secondary">
+                    Od defaultnog .NET predloška do početnog korisničkog sustava za AzilEdu.
+                </MudText>
+                <MudDivider Class="my-2" />
+                <MudText Typo="Typo.body1">
+                    Ova lekcija prati sadržaj učeničkog materijala za Predavanje 2 i unutar sebe sadrži i prošireni
+                    uvod u MudBlazor. Svaka važna cjelina prikazuje <b>objašnjenje</b>, <b>kôd</b> i
+                    <b>rezultat / smisao</b> tog koda.
+                </MudText>
+            </MudStack>
+        </MudPaper>
+
+        <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Dense="true">
+            Ova stranica služi kao tutorial i referenca. Neki primjeri prikazuju stvarni UI rezultat, a neki
+            prikazuju objašnjenje što se u projektu mijenja i zašto.
+        </MudAlert>
+
+        @SectionCard(
+                "1. Zašto nam ovo treba",
+                "Projekt tehnički postoji, ali još ne izgleda kao prava aplikacija. Korisnik očekuje naslov, navigaciju i jasne module.",
+                WhyCode,
+                @<MudGrid Spacing="3">
+            <MudItem xs="12" md="4">
+                <MudPaper Class="pa-4" Outlined="true">
+                    <MudIcon Icon="@Icons.Material.Filled.Web" Color="Color.Primary" Size="Size.Large" Class="mb-2" />
+                    <MudText Typo="Typo.h6">MudBlazor</MudText>
+                    <MudText Typo="Typo.body2">Daje gotove UI komponente poput trake, menija, kartica i gumba.</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudPaper Class="pa-4" Outlined="true">
+                    <MudIcon Icon="@Icons.Material.Filled.ViewQuilt" Color="Color.Primary" Size="Size.Large" Class="mb-2" />
+                    <MudText Typo="Typo.h6">Layout</MudText>
+                    <MudText Typo="Typo.body2">Više stranica koristi isti zajednički okvir: gornju traku, izbornik i prostor za sadržaj.</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudPaper Class="pa-4" Outlined="true">
+                    <MudIcon Icon="@Icons.Material.Filled.Menu" Color="Color.Primary" Size="Size.Large" Class="mb-2" />
+                    <MudText Typo="Typo.h6">Navigacija</MudText>
+                    <MudText Typo="Typo.body2">Korisnik odmah vidi od kojih se modula sustav sastoji.</MudText>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+                )
+
+        @SectionCard(
+                "2. Što trebate razumjeti prije rada",
+                "Prije koda treba jasno razlikovati stranicu, layout i navigaciju.",
+                ConceptsCode,
+                @<MudGrid Spacing="3">
+            <MudItem xs="12" md="4">
+                <MudPaper Class="pa-4" Elevation="1">
+                    <MudText Typo="Typo.h6">Stranica</MudText>
+                    <MudText Typo="Typo.body2">Razor komponenta kojoj pristupamo preko rute, npr. <b>/animals</b>.</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudPaper Class="pa-4" Elevation="1">
+                    <MudText Typo="Typo.h6">Layout</MudText>
+                    <MudText Typo="Typo.body2">Zajednički okvir aplikacije: gornja traka, bočni meni i prostor za sadržaj.</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudPaper Class="pa-4" Elevation="1">
+                    <MudText Typo="Typo.h6">Navigacija</MudText>
+                    <MudText Typo="Typo.body2">Popis linkova koji vode na stranice i module aplikacije.</MudText>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+                )
+
+        @SectionCard(
+                "3. Korak 1 – Pokreni projekt i pogledaj defaultni izgled",
+                "Prije izmjena je korisno vidjeti početno stanje. Tek tada će razlika nakon MudBlazora biti jasna.",
+                DefaultLookCode,
+                @<MudPaper Class="pa-5" Elevation="1">
+            <MudText Typo="Typo.h6" GutterBottom="true">Što treba napraviti</MudText>
+            <MudList T="string" Dense="true">
+                <MudListItem T="string">Pokreni <b>App</b> i <b>API</b> kao više startup projekata.</MudListItem>
+                <MudListItem T="string">Pogledaj kako sada izgleda aplikacija.</MudListItem>
+                <MudListItem T="string">Zapamti početno stanje – to je namjerno generički predložak.</MudListItem>
+            </MudList>
+        </MudPaper>
+                )
+
+        @SectionCard(
+                "4. Korak 2 – Instaliraj MudBlazor u App projektu",
+                "MudBlazor se instalira samo u frontend projektu AzilEdu.App. API projekt ga ne treba.",
+                InstallCode,
+                @<MudPaper Class="pa-5" Elevation="1">
+            <MudText Typo="Typo.h6" GutterBottom="true">Rezultat ovog koraka</MudText>
+            <MudText Typo="Typo.body1">
+                Nakon instalacije projekt dobiva pristup komponentama kao što su <b>MudText</b>, <b>MudButton</b>,
+                <b>MudPaper</b>, <b>MudDrawer</b> i drugima.
+            </MudText>
+        </MudPaper>
+                )
+
+        @SectionCard(
+                "5. Korak 3 – Dodaj MudBlazor servise u Program.cs",
+                "Bez registracije servisa neke komponente neće raditi kako treba. Ovdje vidiš još jedan primjer konfiguracije aplikacije kroz servisni container.",
+                ProgramCode,
+                @<MudPaper Class="pa-5" Elevation="1">
+            <MudText Typo="Typo.h6">Što ovaj kod radi?</MudText>
+            <MudText Typo="Typo.body2">
+                Registrira servise koje MudBlazor koristi u aplikaciji.
+            </MudText>
+            @MudCodeBox("Najvažnija linija", ProgramCode)
+        </MudPaper>
+                )
+
+        @SectionCard(
+                "6. Korak 4 – Uredi MainLayout.razor",
+                "MainLayout definira zajednički okvir svih stranica koje koriste taj layout.",
+                MainLayoutCode,
+                @<MudPaper Class="pa-5" Elevation="1">
+            <MudStack Spacing="2">
+                <MudAppBar Elevation="1" Color="Color.Primary" Dense="true">
+                    <MudText Typo="Typo.h6">AzilEdu</MudText>
+                    <MudSpacer />
+                    <MudText Typo="Typo.body2">Sustav za upravljanje azilom</MudText>
+                </MudAppBar>
+                <MudPaper Class="pa-4" Outlined="true">
+                    <MudText Typo="Typo.body2">
+                        U pravoj aplikaciji ovdje bi ispod AppBar-a bio bočni izbornik i prostor za sadržaj kroz <b>@@Body</b>.
+                    </MudText>
+                </MudPaper>
+            </MudStack>
+        </MudPaper>
+                )
+
+        @SectionCard(
+                "7. Korak 5 – Uredi NavMenu.razor",
+                "Navigacija unaprijed pokazuje strukturu buduće aplikacije. Nije problem ako moduli još nisu gotovi.",
+                NavMenuCode,
+                @<MudPaper Class="pa-5" Elevation="1">
+            <MudNavMenu>
+                <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dashboard">Dashboard</MudNavLink>
+                <MudNavLink Href="/animals" Icon="@Icons.Material.Filled.Pets">Animals</MudNavLink>
+                <MudNavLink Href="/species" Icon="@Icons.Material.Filled.Category">Species</MudNavLink>
+                <MudNavLink Href="/breeds" Icon="@Icons.Material.Filled.Label">Breeds</MudNavLink>
+                <MudNavLink Href="/housing-units" Icon="@Icons.Material.Filled.HomeWork">Housing Units</MudNavLink>
+                <MudNavLink Href="/adopters" Icon="@Icons.Material.Filled.People">Adopters</MudNavLink>
+            </MudNavMenu>
+        </MudPaper>
+                )
+
+        @SectionCard(
+                "8. Važno – Uredi App.razor",
+                "Ovdje dodajemo MudBlazor CSS i JS te osiguravamo interaktivni render mode za layout i klik događaje.",
+                AppRazorCode,
+                @<MudPaper Class="pa-5" Elevation="1">
+            <MudText Typo="Typo.h6" GutterBottom="true">Zašto je ovo bitno?</MudText>
+            <MudList T="string" Dense="true">
+                <MudListItem T="string">Bez MudBlazor CSS-a layout će izgledati raspadnuto.</MudListItem>
+                <MudListItem T="string">Bez JS dijela neke interakcije neće raditi pravilno.</MudListItem>
+                <MudListItem T="string">Bez <b>InteractiveServer</b> render moda klikovi i drawer ponašanje mogu izgledati pokvareno.</MudListItem>
+            </MudList>
+        </MudPaper>
+                )
+
+        @SectionCard(
+                "9. Korak 6 – Dodaj placeholder stranice",
+                "Za module koje još nismo razvili napravi jednostavne placeholder stranice. Tako izbjegavaš mrtve linkove.",
+                PlaceholderCode,
+                @<MudPaper Class="pa-5" Elevation="1">
+            <MudText Typo="Typo.h4" Class="mb-2">Species</MudText>
+            <MudText Typo="Typo.body1">Ovdje ćemo kasnije raditi upravljanje vrstama životinja.</MudText>
+        </MudPaper>
+                )
+
+        <MudPaper Class="pa-8" Elevation="3">
+            <MudStack Spacing="2">
+                <MudChip T="string" Color="Color.Secondary" Variant="Variant.Filled" Size="Size.Medium">
+                    Umetnuta lekcija
+                </MudChip>
+                <MudText Typo="Typo.h3">Uvod u MudBlazor i osnovne komponente</MudText>
+                <MudText Typo="Typo.body1">
+                    Ovaj dio odgovara napomeni iz dokumenta: <b>[ovdje ubaci lekciju o Mud Blazoru]</b>.
+                    Uključen je u istom vizualnom stilu kao ostatak stranice.
+                </MudText>
+            </MudStack>
+        </MudPaper>
+
+        @SectionCard(
+                "10. Što je MudBlazor?",
+                "MudBlazor je biblioteka gotovih UI komponenti za Blazor. Ne rješava bazu i poslovnu logiku, nego izgled i organizaciju sučelja.",
+                WhatIsMudCode,
+                @<MudGrid Spacing="3">
+            <MudItem xs="12" md="6">
+                <MudPaper Class="pa-4" Elevation="1">
+                    <MudText Typo="Typo.h6">Blazor</MudText>
+                    <MudText Typo="Typo.body2">Framework u kojem gradimo aplikaciju.</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudPaper Class="pa-4" Elevation="1">
+                    <MudText Typo="Typo.h6">MudBlazor</MudText>
+                    <MudText Typo="Typo.body2">Skup gotovih elemenata koje koristimo unutar te aplikacije.</MudText>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+                )
+
+        @SectionCard(
+                "11. Zašto koristimo MudBlazor?",
+                "Projekt AzilEdu sadrži više modula i bez biblioteke komponenti UI bi brzo postao neuredan i težak za održavanje.",
+                WhyMudCode,
+                @<MudGrid Spacing="3">
+            <MudItem xs="12" md="4">
+                <MudPaper Class="pa-4" Outlined="true">
+                    <MudIcon Icon="@Icons.Material.Filled.Speed" Color="Color.Primary" Size="Size.Large" Class="mb-2" />
+                    <MudText Typo="Typo.h6">Brži razvoj</MudText>
+                    <MudText Typo="Typo.body2">Gotove komponente ubrzavaju izradu stranica.</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudPaper Class="pa-4" Outlined="true">
+                    <MudIcon Icon="@Icons.Material.Filled.Devices" Color="Color.Primary" Size="Size.Large" Class="mb-2" />
+                    <MudText Typo="Typo.h6">Responzivan raspored</MudText>
+                    <MudText Typo="Typo.body2">Lakše se slažu stranice za različite veličine ekrana.</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudPaper Class="pa-4" Outlined="true">
+                    <MudIcon Icon="@Icons.Material.Filled.AutoAwesome" Color="Color.Primary" Size="Size.Large" Class="mb-2" />
+                    <MudText Typo="Typo.h6">Pregledniji UI</MudText>
+                    <MudText Typo="Typo.body2">Manje vlastitog CSS-a i profesionalniji izgled aplikacije.</MudText>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+                )
+
+        @SectionCard(
+                "12. Što je komponenta?",
+                "Komponenta je gotovi blok sučelja koji koristimo u stranici. Ima naziv, atribute i sadržaj.",
+                ComponentCode,
+                @<MudPaper Class="pa-5" Elevation="1">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary">Spremi</MudButton>
+        </MudPaper>
+                )
+
+        @SectionCard(
+                "13. Kako čitati komponentu?",
+                "Primjer kartice s naslovom i opisom pokazuje kako se kombiniraju MudPaper i MudText.",
+                ReadComponentCode,
+                @<MudPaper Class="pa-4" Elevation="2">
+            <MudText Typo="Typo.h5">Animals</MudText>
+            <MudText Typo="Typo.body2">Pregled životinja u azilu.</MudText>
+        </MudPaper>
+                )
+
+        @SectionCard(
+                "14. Utility klase – što znači pa-4?",
+                "Utility klase služe za razmake i sitne dorade izgleda. Najčešće se koriste unutar atributa Class.",
+                UtilityCode,
+                @<MudGrid Spacing="3">
+            <MudItem xs="12" md="4">
+                <MudPaper Class="pa-4" Elevation="1">
+                    <MudText Typo="Typo.h6">pa-4</MudText>
+                    <MudText Typo="Typo.body2">Padding na svim stranama.</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudPaper Class="px-4 py-2" Elevation="1">
+                    <MudText Typo="Typo.h6">px-4 py-2</MudText>
+                    <MudText Typo="Typo.body2">Padding lijevo/desno i gore/dolje.</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudPaper Class="pa-4 mt-4" Elevation="1">
+                    <MudText Typo="Typo.h6">mt-4</MudText>
+                    <MudText Typo="Typo.body2">Vanjski razmak odozgo.</MudText>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+                )
+
+        @SectionCard(
+                "15. Komponenta MudText",
+                "MudText služi za prikaz teksta. Najvažniji atribut je Typo, a često se koristi i Color, GutterBottom i Align.",
+                MudTextCode,
+                @<MudStack Spacing="1">
+            <MudText Typo="Typo.h2">AzilEdu</MudText>
+            <MudText Typo="Typo.h5" Color="Color.Primary">Animals</MudText>
+            <MudText Typo="Typo.body1">Ova aplikacija služi za evidenciju životinja.</MudText>
+            <MudText Typo="Typo.body2">Pregled životinja u azilu.</MudText>
+            <MudText Typo="Typo.caption">Zadnje ažuriranje: danas</MudText>
+        </MudStack>
+                )
+
+        @SectionCard(
+                "16. Boje i tema",
+                "Color.Primary, Secondary i ostale semantičke boje ne mijenjaju se na samoj komponenti nego u Mud temi.",
+                ThemeCode,
+                @<MudGrid Spacing="2">
+            <MudItem xs="6" md="2"><MudChip T="string" Color="Color.Primary" Variant="Variant.Filled">Primary</MudChip></MudItem>
+            <MudItem xs="6" md="2"><MudChip T="string" Color="Color.Secondary" Variant="Variant.Filled">Secondary</MudChip></MudItem>
+            <MudItem xs="6" md="2"><MudChip T="string" Color="Color.Success" Variant="Variant.Filled">Success</MudChip></MudItem>
+            <MudItem xs="6" md="2"><MudChip T="string" Color="Color.Warning" Variant="Variant.Filled">Warning</MudChip></MudItem>
+            <MudItem xs="6" md="2"><MudChip T="string" Color="Color.Error" Variant="Variant.Filled">Error</MudChip></MudItem>
+            <MudItem xs="6" md="2"><MudChip T="string" Color="Color.Info" Variant="Variant.Filled">Info</MudChip></MudItem>
+        </MudGrid>
+                )
+
+        @SectionCard(
+                "17. Komponenta MudPaper",
+                "MudPaper je kartica ili površina koja vizualno odvaja dio sadržaja.",
+                MudPaperCode,
+                @<MudGrid Spacing="3">
+            <MudItem xs="12" md="4">
+                <MudPaper Class="pa-4" Elevation="0">
+                    <MudText Typo="Typo.h6">Bez sjene</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudPaper Class="pa-4" Elevation="2">
+                    <MudText Typo="Typo.h6">Blaga sjena</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudPaper Class="pa-4" Outlined="true">
+                    <MudText Typo="Typo.h6">Kartica s obrubom</MudText>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+                )
+
+        @SectionCard(
+                "18. Komponenta MudStack",
+                "MudStack slaže elemente jedan ispod drugoga ili jedan pored drugoga. Najvažniji atributi su Spacing, Row, Justify i AlignItems.",
+                MudStackCode,
+                @<MudStack Spacing="3">
+            <MudStack Spacing="1">
+                <MudText Typo="Typo.h5">Vertikalni raspored</MudText>
+                <MudText Typo="Typo.body2">Elementi jedan ispod drugoga.</MudText>
+            </MudStack>
+
+            <MudStack Row="true" Spacing="2">
+                <MudButton Color="Color.Primary">Dodaj</MudButton>
+                <MudButton Color="Color.Secondary">Pregled</MudButton>
+            </MudStack>
+
+            <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                <MudText Typo="Typo.h5">Species</MudText>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary">Add Species</MudButton>
+            </MudStack>
+        </MudStack>
+                )
+
+        @SectionCard(
+                "19. Komponente MudGrid i MudItem",
+                "Koriste se za raspored elemenata u stupce i responzivni layout.",
+                MudGridCode,
+                @<MudGrid Spacing="3">
+            <MudItem xs="12" md="4">
+                <MudPaper Class="pa-4" Elevation="1">Prva kartica</MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudPaper Class="pa-4" Elevation="1">Druga kartica</MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudPaper Class="pa-4" Elevation="1">Treća kartica</MudPaper>
+            </MudItem>
+        </MudGrid>
+                )
+
+        @SectionCard(
+                "20. Komponenta MudButton",
+                "MudButton prikazuje gumb. Najvažniji atributi su Variant, Color, Size, StartIcon i EndIcon.",
+                MudButtonCode,
+                @<MudStack Spacing="2">
+            <MudStack Row="true" Spacing="2">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary">Add Species</MudButton>
+                <MudButton Variant="Variant.Outlined" Color="Color.Secondary">Pregled vrsta</MudButton>
+                <MudButton Variant="Variant.Text" Color="Color.Info">Saznaj više</MudButton>
+            </MudStack>
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Success"
+                       StartIcon="@Icons.Material.Filled.Save">
+                Spremi
+            </MudButton>
+        </MudStack>
+                )
+
+        @SectionCard(
+                "21. Komponenta MudImage",
+                "MudImage služi za prikaz slike. Najčešće se slike spremaju u wwwroot/images.",
+                MudImageCode,
+                @<MudPaper Class="pa-4" Elevation="2">
+            <MudStack Spacing="2">
+                <MudImage Src="images/dog.jpg" Alt="Pas Rex" Width="250" />
+                <MudText Typo="Typo.h6">Rex</MudText>
+                <MudText Typo="Typo.body2">Pas star 3 godine, miran i druželjubiv.</MudText>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mt-2">Detalji</MudButton>
+            </MudStack>
+        </MudPaper>
+                )
+
+        @SectionCard(
+                "22. Komponenta MudTable",
+                "MudTable prikazuje podatke iz liste objekata. Atribut Items prima listu, a RowTemplate opisuje jedan red tablice.",
+                MudTableCode,
+                @<MudTable Items="_species" Dense="true" Hover="true" Striped="true" Bordered="true" Elevation="0">
+            <HeaderContent>
+                <MudTh>Id</MudTh>
+                <MudTh>Name</MudTh>
+                <MudTh>Description</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Id">@context.Id</MudTd>
+                <MudTd DataLabel="Name">@context.Name</MudTd>
+                <MudTd DataLabel="Description">@context.Description</MudTd>
+            </RowTemplate>
+        </MudTable>
+                )
+
+        @SectionCard(
+                "23. Cjelovit primjer početne stranice",
+                "Početna stranica objašnjava što je AzilEdu i što ćemo graditi kroz tečaj. Kasnije će se pretvoriti u dashboard.",
+                HomeCode,
+                @<MudPaper Class="pa-6" Elevation="1">
+            <MudText Typo="Typo.h3" GutterBottom="true">Dobro došli u AzilEdu</MudText>
+            <MudText Typo="Typo.body1" Class="mb-4">
+                Ova aplikacija služi za evidenciju životinja, udomljenja, medicinskih zapisa i drugih procesa u azilu.
+            </MudText>
+
+            <MudGrid Spacing="3">
+                <MudItem xs="12" md="6">
+                    <MudPaper Class="pa-4" Elevation="1">
+                        <MudText Typo="Typo.h6">Što ćemo graditi?</MudText>
+                        <MudText Typo="Typo.body2">Animals, Species, Breeds, Housing Units, Notes, Medical Records, Adopters i Adoption modul.</MudText>
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudPaper Class="pa-4" Elevation="1">
+                        <MudText Typo="Typo.h6">Zašto odvojeni App i API?</MudText>
+                        <MudText Typo="Typo.body2">Frontend prikazuje podatke korisniku, a API obrađuje zahtjeve i radi s bazom.</MudText>
+                    </MudPaper>
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+                )
+
+        @SectionCard(
+                "24. Cjelovit primjer Species stranice",
+                "Species stranica je dobar prvi primjer spajanja naslova, akcijskog gumba i tabličnog prikaza liste objekata.",
+                SpeciesPageCode,
+                @<MudStack Spacing="3">
+            <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                <MudText Typo="Typo.h4">Species</MudText>
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           StartIcon="@Icons.Material.Filled.Add">
+                    Add Species
+                </MudButton>
+            </MudStack>
+
+            <MudText Typo="Typo.body1">
+                Ovdje se prikazuju vrste životinja koje koristimo u sustavu.
+            </MudText>
+
+            <MudTable Items="_species"
+                      Dense="true"
+                      Hover="true"
+                      Striped="true"
+                      Bordered="true"
+                      Elevation="0">
+                <HeaderContent>
+                    <MudTh>Id</MudTh>
+                    <MudTh>Name</MudTh>
+                    <MudTh>Description</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Id">@context.Id</MudTd>
+                    <MudTd DataLabel="Name">@context.Name</MudTd>
+                    <MudTd DataLabel="Description">@context.Description</MudTd>
+                </RowTemplate>
+            </MudTable>
+        </MudStack>
+                )
+
+        @SectionCard(
+                "25. Kako provjeriti da sve radi",
+                "Nakon izmjena treba provjeriti osnovne vizualne i funkcionalne znakove da je aplikacija ispravno postavljena.",
+                CheckCode,
+                @<MudList T="string" Dense="true">
+            <MudListItem T="string">Na vrhu se vidi traka s nazivom aplikacije.</MudListItem>
+            <MudListItem T="string">Sa strane se vidi navigacija s više linkova.</MudListItem>
+            <MudListItem T="string">Klik na početnu stranicu prikazuje uvodni sadržaj.</MudListItem>
+            <MudListItem T="string">Klik na placeholder stranice vodi na jednostavne stranice s naslovom i opisom.</MudListItem>
+        </MudList>
+                )
+
+        @SectionCard(
+                "26. Što ste danas zapravo naučili",
+                "Ovo predavanje nije bilo samo o izgledu, nego o tome kako Blazor projekt počinje dobivati oblik pravog sustava.",
+                LearnedCode,
+                @<MudList T="string" Dense="true">
+            <MudListItem T="string">Kako se u Blazor projektu uvodi UI biblioteka.</MudListItem>
+            <MudListItem T="string">Što je layout i čemu služi.</MudListItem>
+            <MudListItem T="string">Kako navigacija pomaže organizaciji aplikacije.</MudListItem>
+            <MudListItem T="string">Kako projekt počinje dobivati oblik pravog sustava.</MudListItem>
+        </MudList>
+                )
+
+        @SectionCard(
+                "27. Domaći zadatak",
+                "Zadatak služi da učenik samostalno proširi strukturu aplikacije i učvrsti razumijevanje layouta, navigacije i placeholder stranica.",
+                HomeworkCode,
+                @<MudPaper Class="pa-5" Elevation="1">
+            <MudList T="string" Dense="true">
+                <MudListItem T="string">Dodaj u navigaciju <b>Notes</b> i <b>Medical Records</b>.</MudListItem>
+                <MudListItem T="string">Napravi placeholder stranice za oba modula.</MudListItem>
+                <MudListItem T="string">Na početnu stranicu dodaj karticu koja objašnjava čemu služi Shared projekt i DTO modeli.</MudListItem>
+                <MudListItem T="string">Napravi commit s jasnom porukom.</MudListItem>
+            </MudList>
+        </MudPaper>
+                )
+
+    </MudStack>
+</MudContainer>
+
+@code {
+    private string? copiedCode;
+
+    private readonly List<SpeciesItem> _species = new()
+    {
+        new SpeciesItem { Id = 1, Name = "Dog", Description = "Domaći pas" },
+        new SpeciesItem { Id = 2, Name = "Cat", Description = "Domaća mačka" },
+        new SpeciesItem { Id = 3, Name = "Bird", Description = "Ptica" }
+    };
+
+    private async Task CopyToClipboard(string text)
+    {
+        await JS.InvokeVoidAsync("navigator.clipboard.writeText", text);
+        copiedCode = text;
+        Snackbar.Clear();
+        Snackbar.Add("Kôd je kopiran u clipboard.", Severity.Success);
+        StateHasChanged();
+
+        await Task.Delay(1400);
+
+        if (copiedCode == text)
+        {
+            copiedCode = null;
+            StateHasChanged();
+        }
+    }
+
+    private RenderFragment SectionCard(string title, string intro, string codeText, RenderFragment result) => @<MudPaper Class="pa-6" Elevation="1">
+        <MudStack Spacing="3">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                <MudAvatar Size="Size.Large" Color="Color.Primary" Variant="Variant.Filled">@title.Split('.')[0]</MudAvatar>
+                <MudStack Spacing="0">
+                    <MudText Typo="Typo.h4">@title</MudText>
+                    <MudText Typo="Typo.body1">@intro</MudText>
+                </MudStack>
+            </MudStack>
+
+            <MudGrid Spacing="3">
+                <MudItem xs="12" lg="6">
+                    <MudPaper Class="pa-0" Outlined="true">
+                        <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Class="px-4 py-3">
+                            <MudText Typo="Typo.h6">Kôd</MudText>
+                            <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
+                                <MudChip T="string" Color="Color.Dark" Variant="Variant.Outlined" Size="Size.Small">Razor</MudChip>
+                                <MudIconButton Icon="@(copiedCode == codeText ? Icons.Material.Filled.Check : Icons.Material.Filled.ContentCopy)"
+                                               Size="Size.Small"
+                                               Color="@(copiedCode == codeText ? Color.Success : Color.Default)"
+                                               Variant="Variant.Text"
+                                               OnClick="@(() => CopyToClipboard(codeText))" />
+                            </MudStack>
+                        </MudStack>
+                        <MudDivider />
+                        <MudPaper Class="ma-4 pa-4" Elevation="0" Style="background-color:#1e1e1e;color:#dcdcdc;overflow-x:auto;">
+                            <pre style="margin:0;white-space:pre-wrap;font-family:Consolas, monospace;font-size:0.92rem;">@codeText</pre>
+                        </MudPaper>
+                    </MudPaper>
+                </MudItem>
+
+                <MudItem xs="12" lg="6">
+                    <MudPaper Class="pa-0" Outlined="true">
+                        <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Class="px-4 py-3">
+                            <MudText Typo="Typo.h6">Rezultat</MudText>
+                            <MudChip T="string" Color="Color.Success" Variant="Variant.Outlined" Size="Size.Small">Preview</MudChip>
+                        </MudStack>
+                        <MudDivider />
+                        <MudPaper Class="pa-4 ma-4" Elevation="0" Style="background: var(--mud-palette-background-gray);">
+                            @result
+                        </MudPaper>
+                    </MudPaper>
+                </MudItem>
+            </MudGrid>
+        </MudStack>
+    </MudPaper>;
+
+    private RenderFragment MudCodeBox(string label, string codeText) => @<MudPaper Class="pa-0" Outlined="true">
+        <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Class="px-4 py-3">
+            <MudText Typo="Typo.h6">@label</MudText>
+            <MudIconButton Icon="@(copiedCode == codeText ? Icons.Material.Filled.Check : Icons.Material.Filled.ContentCopy)"
+                           Size="Size.Small"
+                           Color="@(copiedCode == codeText ? Color.Success : Color.Default)"
+                           Variant="Variant.Text"
+                           OnClick="@(() => CopyToClipboard(codeText))" />
+        </MudStack>
+        <MudDivider />
+        <MudPaper Class="ma-4 pa-4" Elevation="0" Style="background-color:#1e1e1e;color:#dcdcdc;overflow-x:auto;">
+            <pre style="margin:0;white-space:pre-wrap;font-family:Consolas, monospace;font-size:0.92rem;">@codeText</pre>
+        </MudPaper>
+    </MudPaper>;
+
+    private const string WhyCode = "MudBlazor nam daje gotove UI komponente poput trake, menija, kartica i gumba.\n\nLayout nam omogućuje da više stranica koristi isti zajednički okvir.\n\nNavigacija pomaže korisniku da odmah vidi od kojih se modula aplikacija sastoji.";
+    private const string ConceptsCode = "Stranica je Razor komponenta kojoj pristupamo preko neke rute, npr. /animals.\n\nLayout je zajednički okvir aplikacije: gornja traka, bočni meni i prostor za sadržaj.\n\nNavigacija je popis linkova koji vode na stranice i module aplikacije.";
+    private const string DefaultLookCode = "Pokreni App i API kao više startup projekata.\n\nPogledaj kako sada izgleda aplikacija.\n\nVjerojatno još djeluje kao generički predložak.\nTo je namjerno: prvo ćemo vidjeti početno stanje, a zatim ga zamijeniti vlastitim izgledom.";
+    private const string InstallCode = "Desni klik na AzilEdu.App → Manage NuGet Packages.\n\nPronađi paket MudBlazor i instaliraj ga.\n\nMudBlazor instaliraš samo u AzilEdu.App projektu, jer je to frontend aplikacija.\nAPI projekt ne koristi MudBlazor.";
+    private const string ProgramCode = "builder.Services.AddMudServices();";
+    private const string MainLayoutCode = "@inherits LayoutComponentBase\n\n<MudThemeProvider />\n<MudDialogProvider />\n<MudSnackbarProvider />\n\n<MudLayout>\n    <MudAppBar Elevation=\"1\" Color=\"Color.Primary\">\n        <MudText Typo=\"Typo.h6\">AzilEdu</MudText>\n        <MudSpacer />\n        <MudText Typo=\"Typo.body2\">Sustav za upravljanje azilom</MudText>\n    </MudAppBar>\n\n    <MudDrawer Open=\"true\" Elevation=\"1\" Variant=\"DrawerVariant.Responsive\">\n        <NavMenu />\n    </MudDrawer>\n\n    <MudMainContent Class=\"pa-6\">\n        @Body\n    </MudMainContent>\n</MudLayout>";
+    private const string NavMenuCode = "<MudNavMenu>\n    <MudNavLink Href=\"/\" Match=\"NavLinkMatch.All\" Icon=\"@Icons.Material.Filled.Dashboard\">\n        Dashboard\n    </MudNavLink>\n\n    <MudNavLink Href=\"/animals\" Icon=\"@Icons.Material.Filled.Pets\">\n        Animals\n    </MudNavLink>\n\n    <MudNavLink Href=\"/species\" Icon=\"@Icons.Material.Filled.Category\">\n        Species\n    </MudNavLink>\n\n    <MudNavLink Href=\"/breeds\" Icon=\"@Icons.Material.Filled.Label\">\n        Breeds\n    </MudNavLink>\n\n    <MudNavLink Href=\"/housing-units\" Icon=\"@Icons.Material.Filled.HomeWork\">\n        Housing Units\n    </MudNavLink>\n\n    <MudNavLink Href=\"/adopters\" Icon=\"@Icons.Material.Filled.People\">\n        Adopters\n    </MudNavLink>\n</MudNavMenu>";
+    private const string AppRazorCode = "<!DOCTYPE html>\n<html lang=\"en\">\n\n<head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <base href=\"/\" />\n    <ResourcePreloader />\n    <link rel=\"stylesheet\" href=\"@Assets[\\\"app.css\\\"]\" />\n    <link rel=\"stylesheet\" href=\"@Assets[\\\"AzilEdu.App.styles.css\\\"]\" />\n    <link href=\"_content/MudBlazor/MudBlazor.min.css\" rel=\"stylesheet\" />\n    <ImportMap />\n    <link rel=\"icon\" type=\"image/png\" href=\"favicon.png\" />\n    <HeadOutlet @rendermode=\"InteractiveServer\" />\n</head>\n\n<body>\n    <Routes @rendermode=\"InteractiveServer\" />\n    <ReconnectModal />\n    <script src=\"_content/MudBlazor/MudBlazor.min.js\"></script>\n    <script src=\"@Assets[\\\"_framework/blazor.web.js\\\"]\"></script>\n</body>\n\n</html>";
+    private const string PlaceholderCode = "@page \"/species\"\n\n<MudText Typo=\"Typo.h4\" Class=\"mb-2\">Species</MudText>\n<MudText Typo=\"Typo.body1\">Ovdje ćemo kasnije raditi upravljanje vrstama životinja.</MudText>";
+    private const string WhatIsMudCode = "MudBlazor je biblioteka gotovih UI komponenti za Blazor.\n\nTo znači:\n- Blazor je framework u kojem gradimo aplikaciju\n- MudBlazor je skup gotovih elemenata koje koristimo unutar te aplikacije";
+    private const string WhyMudCode = "MudBlazor pomaže jer:\n- daje gotove komponente\n- ubrzava izradu stranica\n- omogućuje responzivan raspored\n- smanjuje potrebu za vlastitim CSS-om\n- čini aplikaciju preglednijom i profesionalnijom";
+    private const string ComponentCode = "<MudButton Variant=\"Variant.Filled\" Color=\"Color.Primary\">\n    Spremi\n</MudButton>";
+    private const string ReadComponentCode = "<MudPaper Class=\"pa-4\">\n    <MudText Typo=\"Typo.h5\">Animals</MudText>\n    <MudText Typo=\"Typo.body2\">Pregled životinja u azilu.</MudText>\n</MudPaper>";
+    private const string UtilityCode = "Class=\"pa-4\"     // padding all\nClass=\"px-4\"     // padding lijevo i desno\nClass=\"py-2\"     // padding gore i dolje\nClass=\"mt-4\"     // margin top\nClass=\"mb-2\"     // margin bottom";
+    private const string MudTextCode = "<MudText Typo=\"Typo.h2\">AzilEdu</MudText>\n\n<MudText Typo=\"Typo.h5\" Color=\"Color.Primary\">Animals</MudText>\n\n<MudText Typo=\"Typo.body1\">\n    Ova aplikacija služi za evidenciju životinja.\n</MudText>\n\n<MudText Typo=\"Typo.body2\">\n    Pregled životinja u azilu.\n</MudText>\n\n<MudText Typo=\"Typo.caption\">\n    Zadnje ažuriranje: danas\n</MudText>";
+    private const string ThemeCode = "<MudThemeProvider Theme=\"_theme\" />\n<MudDialogProvider />\n<MudSnackbarProvider />\n\n@code {\n    private MudTheme _theme = new MudTheme()\n    {\n        PaletteLight = new PaletteLight()\n        {\n            Primary = Colors.Green.Default,\n            Secondary = Colors.Pink.Accent2,\n            Success = Colors.Green.Default,\n            Warning = Colors.Orange.Default,\n            Error = Colors.Red.Default,\n            Info = Colors.LightBlue.Default\n        }\n    };\n}";
+    private const string MudPaperCode = "<MudPaper Class=\"pa-4\" Elevation=\"0\">\n    Bez sjene\n</MudPaper>\n\n<MudPaper Class=\"pa-4\" Elevation=\"2\">\n    Blaga sjena\n</MudPaper>\n\n<MudPaper Class=\"pa-4\" Outlined=\"true\">\n    Kartica s obrubom\n</MudPaper>";
+    private const string MudStackCode = "<MudStack Spacing=\"2\">\n    <MudText Typo=\"Typo.h5\">Animals</MudText>\n    <MudText Typo=\"Typo.body2\">Pregled životinja</MudText>\n</MudStack>\n\n<MudStack Row=\"true\" Spacing=\"2\">\n    <MudButton Color=\"Color.Primary\">Dodaj</MudButton>\n    <MudButton Color=\"Color.Secondary\">Pregled</MudButton>\n</MudStack>\n\n<MudStack Row=\"true\"\n          Justify=\"Justify.SpaceBetween\"\n          AlignItems=\"AlignItems.Center\">\n    <MudText Typo=\"Typo.h4\">Species</MudText>\n    <MudButton Variant=\"Variant.Filled\" Color=\"Color.Primary\">Add Species</MudButton>\n</MudStack>";
+    private const string MudGridCode = "<MudGrid>\n    <MudItem xs=\"12\" md=\"4\">\n        <MudPaper Class=\"pa-4\">Prva kartica</MudPaper>\n    </MudItem>\n\n    <MudItem xs=\"12\" md=\"4\">\n        <MudPaper Class=\"pa-4\">Druga kartica</MudPaper>\n    </MudItem>\n\n    <MudItem xs=\"12\" md=\"4\">\n        <MudPaper Class=\"pa-4\">Treća kartica</MudPaper>\n    </MudItem>\n</MudGrid>";
+    private const string MudButtonCode = "<MudButton Variant=\"Variant.Filled\" Color=\"Color.Primary\">\n    Add Species\n</MudButton>\n\n<MudButton Variant=\"Variant.Outlined\" Color=\"Color.Secondary\">\n    Pregled vrsta\n</MudButton>\n\n<MudButton Variant=\"Variant.Text\" Color=\"Color.Info\">\n    Saznaj više\n</MudButton>\n\n<MudButton Variant=\"Variant.Filled\"\n           Color=\"Color.Success\"\n           StartIcon=\"@Icons.Material.Filled.Save\">\n    Spremi\n</MudButton>";
+    private const string MudImageCode = "<MudImage Src=\"images/dog.jpg\" Alt=\"Pas Rex\" Width=\"250\" />\n\n<MudPaper Class=\"pa-4\" Elevation=\"2\">\n    <MudImage Src=\"images/dog.jpg\"\n              Alt=\"Pas Rex\"\n              Width=\"250\"\n              Class=\"mb-2\" />\n\n    <MudText Typo=\"Typo.h6\">Rex</MudText>\n    <MudText Typo=\"Typo.body2\">\n        Pas star 3 godine, miran i druželjubiv.\n    </MudText>\n\n    <MudButton Variant=\"Variant.Filled\"\n               Color=\"Color.Primary\"\n               Class=\"mt-2\">\n        Detalji\n    </MudButton>\n</MudPaper>";
+    private const string MudTableCode = "<MudTable Items=\"_species\"\n          Dense=\"true\"\n          Hover=\"true\"\n          Striped=\"true\"\n          Bordered=\"true\">\n    <HeaderContent>\n        <MudTh>Id</MudTh>\n        <MudTh>Name</MudTh>\n        <MudTh>Description</MudTh>\n    </HeaderContent>\n    <RowTemplate>\n        <MudTd DataLabel=\"Id\">@context.Id</MudTd>\n        <MudTd DataLabel=\"Name\">@context.Name</MudTd>\n        <MudTd DataLabel=\"Description\">@context.Description</MudTd>\n    </RowTemplate>\n</MudTable>";
+    private const string HomeCode = "@page \"/\"\n\n<MudPaper Class=\"pa-6\" Elevation=\"1\">\n    <MudText Typo=\"Typo.h3\" GutterBottom=\"true\">Dobro došli u AzilEdu</MudText>\n    <MudText Typo=\"Typo.body1\" Class=\"mb-4\">\n        Ova aplikacija služi za evidenciju životinja, udomljenja, medicinskih zapisa i drugih procesa u azilu.\n    </MudText>\n\n    <MudGrid>\n        <MudItem xs=\"12\" md=\"6\">\n            <MudPaper Class=\"pa-4\" Elevation=\"1\">\n                <MudText Typo=\"Typo.h6\">Što ćemo graditi?</MudText>\n                <MudText>Animals, Species, Breeds, Housing Units, Notes, Medical Records, Adopters i Adoption modul.</MudText>\n            </MudPaper>\n        </MudItem>\n        <MudItem xs=\"12\" md=\"6\">\n            <MudPaper Class=\"pa-4\" Elevation=\"1\">\n                <MudText Typo=\"Typo.h6\">Zašto odvojeni App i API?</MudText>\n                <MudText>Frontend prikazuje podatke korisniku, a API obrađuje zahtjeve i radi s bazom.</MudText>\n            </MudPaper>\n        </MudItem>\n    </MudGrid>\n</MudPaper>";
+    private const string SpeciesPageCode = "@page \"/species\"\n\n<MudStack Spacing=\"3\">\n    <MudStack Row=\"true\"\n              Justify=\"Justify.SpaceBetween\"\n              AlignItems=\"AlignItems.Center\">\n        <MudText Typo=\"Typo.h4\">Species</MudText>\n\n        <MudButton Variant=\"Variant.Filled\"\n                   Color=\"Color.Primary\"\n                   StartIcon=\"@Icons.Material.Filled.Add\">\n            Add Species\n        </MudButton>\n    </MudStack>\n\n    <MudText Typo=\"Typo.body1\">\n        Ovdje se prikazuju vrste životinja koje koristimo u sustavu.\n    </MudText>\n\n    <MudTable Items=\"_species\"\n              Dense=\"true\"\n              Hover=\"true\"\n              Striped=\"true\"\n              Bordered=\"true\">\n        <HeaderContent>\n            <MudTh>Id</MudTh>\n            <MudTh>Name</MudTh>\n            <MudTh>Description</MudTh>\n        </HeaderContent>\n        <RowTemplate>\n            <MudTd DataLabel=\"Id\">@context.Id</MudTd>\n            <MudTd DataLabel=\"Name\">@context.Name</MudTd>\n            <MudTd DataLabel=\"Description\">@context.Description</MudTd>\n        </RowTemplate>\n    </MudTable>\n</MudStack>\n\n@code {\n    private List<SpeciesItem> _species = new()\n    {\n        new SpeciesItem { Id = 1, Name = \"Dog\", Description = \"Domaći pas\" },\n        new SpeciesItem { Id = 2, Name = \"Cat\", Description = \"Domaća mačka\" },\n        new SpeciesItem { Id = 3, Name = \"Bird\", Description = \"Ptica\" }\n    };\n}";
+    private const string CheckCode = "Na vrhu se vidi traka s nazivom aplikacije.\n\nSa strane se vidi navigacija s više linkova.\n\nKlik na početnu stranicu prikazuje uvodni sadržaj.\n\nKlik na placeholder stranice vodi na jednostavne stranice s naslovom i opisom.";
+    private const string LearnedCode = "Kako se u Blazor projektu uvodi UI biblioteka.\n\nŠto je layout i čemu služi.\n\nKako navigacija pomaže organizaciji aplikacije.\n\nKako projekt počinje dobivati oblik pravog sustava.";
+    private const string HomeworkCode = "Dodaj u navigaciju Notes i Medical Records.\n\nNapravi placeholder stranice za oba modula.\n\nNa početnu stranicu dodaj karticu koja objašnjava čemu služi Shared projekt i DTO modeli.\n\nNapravi commit s jasnom porukom.";
+
+    public class SpeciesItem
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+    }
+}

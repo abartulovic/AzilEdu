@@ -1,0 +1,93 @@
+﻿
+
+@page "/animals"
+@using AzilEdu.Shared.Models
+ 
+<PageTitle>Životinje</PageTitle>
+ 
+<MudText Typo="Typo.h4" Class="mb-2">Popis životinja</MudText>
+<MudText Typo="Typo.body1" Class="mb-4"></MudText>
+<MudTable Items="@animals" Hover="true" Striped="true" Bordered="true" Dense="true">
+    <HeaderContent>
+        <MudTh>Slika</MudTh>
+        <MudTh>Ime</MudTh>
+        <MudTh>Vrsta</MudTh>
+        <MudTh>Pasmina</MudTh>
+        <MudTh>Spol</MudTh>
+        <MudTh>Starost</MudTh>
+        <MudTh>Datum dolaska</MudTh>
+        <MudTh>Status</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Slika">
+            <MudAvatar Size="Size.Large" Image="@context.ImageUrl" Alt="@context.Name" />
+        </MudTd>
+        <MudTd DataLabel="Ime">@context.Name</MudTd>
+        <MudTd DataLabel="Vrsta">@context.Species</MudTd>
+        <MudTd DataLabel="Pasmina">@context.Breed</MudTd>
+        <MudTd DataLabel="Spol">@context.Gender</MudTd>
+        <MudTd DataLabel="Starost">@context.Age</MudTd>
+        <MudTd DataLabel="Datum dolaska">@context.ArrivalDate.ToShortDateString()</MudTd>
+        <MudTd DataLabel="Status">
+            @if (context.IsAdopted)
+            {
+                <MudChip T="string" Color="Color.Success" Variant="Variant.Filled">
+                    Udomljena
+                </MudChip>
+            }
+            else
+            {
+                <MudChip T="string" Color="Color.Warning" Variant="Variant.Filled">
+                    U azilu
+                </MudChip>
+            }
+        </MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+    private List<Animal> animals = new()
+{
+    new Animal
+    {
+        Id = 1,
+        Name = "Luna",
+        Species = "Pas",
+        Breed = "Labrador",
+        Gender = "Ženka",
+        Age = 3,
+        ArrivalDate = new DateTime(2025, 10, 12),
+        IsAdopted = false,
+        ImageUrl = "/images/animals/luna.webp",
+        Description = "Mirna i druželjubiva kujica koja voli šetnje."
+    },
+    new Animal
+    {
+        Id = 2,
+        Name = "Maza",
+        Species = "Mačka",
+        Breed = "Domaća kratkodlaka",
+        Gender = "Ženka",
+        Age = 2,
+        ArrivalDate = new DateTime(2025, 11, 5),
+        IsAdopted = true,
+        ImageUrl = "/images/animals/maza.webp",
+        Description = "Zaigrana mačka naviknuta na boravak u zatvorenom prostoru."
+    },
+    new Animal
+    {
+        Id = 3,
+        Name = "Rex",
+        Species = "Pas",
+        Breed = "Njemački ovčar",
+        Gender = "Mužjak",
+        Age = 5,
+        ArrivalDate = new DateTime(2026, 1, 20),
+        IsAdopted = false,
+        ImageUrl = "/images/animals/rex.webp",
+        Description = "Aktivan pas koji traži iskusnijeg vlasnika."
+    }
+    };
+    }
+  
+}
