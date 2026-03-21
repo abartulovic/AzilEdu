@@ -1,0 +1,54 @@
+﻿@page "/animals/create"
+@using System.Net.Http.Json
+@inject HttpClient Http
+@inject NavigationManager Navigation
+
+<h3>Dodavanje životinje</h3>
+
+<EditForm Model="@model" OnValidSubmit="@SaveAnimal">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <MudStack Spacing="2">
+        <MudTextField @bind-Value="model.Name" Label="Ime" Required="true" />
+        <MudTextField @bind-Value="model.Species" Label="Vrsta" Required="true" />
+        <MudTextField @bind-Value="model.Breed" Label="Pasmina" />
+        <MudTextField @bind-Value="model.Gender" Label="Spol" />
+        <MudNumericField @bind-Value="model.Age" Label="Dob" />
+        <MudDatePicker @bind-Date="model.ArrivalDate" Label="Datum dolaska" />
+        <MudCheckBox @bind-Value="model.IsAdopted" Label="Udomljena" />
+        <MudTextField @bind-Value="model.ImageUrl" Label="Putanja slike" />
+        <MudTextField @bind-Value="model.Description" Label="Opis" Lines="3" />
+
+        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">
+            Spremi
+        </MudButton>
+    </MudStack>
+</EditForm>
+
+@code {
+    private AnimalCreateDto model = new();
+
+    private async Task SaveAnimal()
+    {
+        var response = await Http.PostAsJsonAsync("api/animals", model);
+
+        if (response.IsSuccessStatusCode)
+        {
+            Navigation.NavigateTo("/animals");
+        }
+    }
+
+    public class AnimalCreateDto
+    {
+        public string Name { get; set; } = string.Empty;
+        public string Species { get; set; } = string.Empty;
+        public string? Breed { get; set; }
+        public string? Gender { get; set; }
+        public int? Age { get; set; }
+        public DateTime? ArrivalDate { get; set; }
+        public bool IsAdopted { get; set; }
+        public string? ImageUrl { get; set; }
+        public string? Description { get; set; }
+    }
+}
