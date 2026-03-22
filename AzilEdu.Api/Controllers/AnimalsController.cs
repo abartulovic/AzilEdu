@@ -16,6 +16,7 @@ public class AnimalsController : ControllerBase
     {
         _context = context;
     }
+
     [HttpGet]
     public async Task<ActionResult<List<AnimalDto>>> GetAnimals()
     {
@@ -38,6 +39,32 @@ public class AnimalsController : ControllerBase
 
         return Ok(animals);
     }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<AnimalDto>> GetAnimalById(int id)
+    {
+        var animal = await _context.Animals.FindAsync(id);
+
+        if (animal is null)
+            return NotFound();
+
+        var dto = new AnimalDto
+        {
+            Id = animal.Id,
+            Name = animal.Name,
+            Species = animal.Species,
+            Breed = animal.Breed,
+            Gender = animal.Gender,
+            Age = animal.Age,
+            ArrivalDate = animal.ArrivalDate,
+            IsAdopted = animal.IsAdopted,
+            ImageUrl = animal.ImageUrl,
+            Description = animal.Description
+        };
+
+        return Ok(dto);
+    }
+
     [HttpPost]
     public async Task<ActionResult<AnimalDto>> CreateAnimal(SaveAnimalDto dto)
     {
@@ -73,30 +100,7 @@ public class AnimalsController : ControllerBase
 
         return CreatedAtAction(nameof(GetAnimalById), new { id = animal.Id }, result);
     }
-    [HttpGet("{id}")]
-    public async Task<ActionResult<AnimalDto>> GetAnimalById(int id)
-    {
-        var animal = await _context.Animals.FindAsync(id);
 
-        if (animal is null)
-            return NotFound();
-
-        var dto = new AnimalDto
-        {
-            Id = animal.Id,
-            Name = animal.Name,
-            Species = animal.Species,
-            Breed = animal.Breed,
-            Gender = animal.Gender,
-            Age = animal.Age,
-            ArrivalDate = animal.ArrivalDate,
-            IsAdopted = animal.IsAdopted,
-            ImageUrl = animal.ImageUrl,
-            Description = animal.Description
-        };
-
-        return Ok(dto);
-    }
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateAnimal(int id, SaveAnimalDto dto)
     {
@@ -118,6 +122,7 @@ public class AnimalsController : ControllerBase
         await _context.SaveChangesAsync();
         return NoContent();
     }
+
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAnimal(int id)
     {

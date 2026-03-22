@@ -1,61 +1,161 @@
 ﻿@page "/animals"
+@using System.Net.Http.Json
 @using AzilEdu.Shared.DTOs
 @inject HttpClient Http
+@inject NavigationManager Navigation
 
-<MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/animals/create" Class="mb-4">
-    Nova životinja
-</MudButton>
-<MudText Typo="Typo.h4" GutterBottom="true">Životinje</MudText>
-<MudText Typo="Typo.body1" Class="mb-4">
-    Na ovoj stranici prikazujemo podatke o životinjama koje dolaze iz API-ja, a ne iz lokalne testne liste.
-</MudText>
+<PageTitle>Životinje</PageTitle>
 
-<MudTable Items="@animals" Hover="true" Striped="true" Bordered="true">
+<MudText Typo="Typo.h4" Class="mb-4">Popis životinja</MudText>
+
+<MudPaper Class="pa-4 mb-4">
+    <MudGrid>
+        <MudItem xs="12" md="4">
+            <MudTextField @bind-Value="searchString"
+                          Label="Pretraži životinje"
+                          Placeholder="Ime, pasmina ili opis"
+                          Variant="Variant.Outlined"
+                          Immediate="true"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" />
+        </MudItem>
+
+        <MudItem xs="12" md="3">
+
+                <MudSelect T="string"
+                           Label="Vrsta"
+                           @bind-Value="selectedSpecies"
+                           Variant="Variant.Outlined"
+                           Clearable="true">
+                    <MudSelectItem Value='@("Pas")'>Pas</MudSelectItem>
+                    <MudSelectItem Value='@("Mačka")'>Mačka</MudSelectItem>
+                    <MudSelectItem Value='@("Ptica")'>Ptica</MudSelectItem>
+                    <MudSelectItem Value='@("Drugo")'>Drugo</MudSelectItem>
+                </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" md="3">
+            <MudSelect T="bool?"
+                       Label="Status udomljenja"
+                       @bind-Value="adoptedFilter"
+                       Variant="Variant.Outlined"
+                       Clearable="true">
+                <MudSelectItem Value="@(true)">Udomljene</MudSelectItem>
+                <MudSelectItem Value="@(false)">Nisu udomljene</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+
+        <MudItem xs="12" md="3" Class="mt-3">
+            <MudButton Variant="Variant.Outlined"
+                       Color="Color.Secondary"
+                       StartIcon="@Icons.Material.Filled.Refresh"
+                       OnClick="ResetFilters">
+                Očisti filtere
+            </MudButton>
+        </MudItem>
+    </MudGrid>
+</MudPaper>
+
+<MudTable Items="animals"
+          Filter="FilterAnimals"
+          Hover="true"
+          Dense="true"
+          Bordered="true"
+          Striped="true">
     <HeaderContent>
-        <MudTh>Slika</MudTh>
-        <MudTh>Ime</MudTh>
-        <MudTh>Vrsta</MudTh>
-        <MudTh>Pasmina</MudTh>
-        <MudTh>Spol</MudTh>
-        <MudTh>Dob</MudTh>
-        <MudTh>Dolazak</MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<AnimalDto, object?>(x => x.Name)">Ime</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<AnimalDto, object?>(x => x.Species)">Vrsta</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<AnimalDto, object?>(x => x.Breed)">Pasmina</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<AnimalDto, object?>(x => x.Age)">Dob</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<AnimalDto, object?>(x => x.ArrivalDate)">Dolazak</MudTableSortLabel></MudTh>
         <MudTh>Status</MudTh>
+        <MudTh>Akcije</MudTh>
     </HeaderContent>
+
     <RowTemplate>
-        <MudTd>
-            <MudImage Src="@context.ImageUrl" Alt="@context.Name" Width="60" Height="60" />
+        <MudTd DataLabel="Ime">@context.Name</MudTd>
+        <MudTd DataLabel="Vrsta">@context.Species</MudTd>
+        <MudTd DataLabel="Pasmina">@context.Breed</MudTd>
+        <MudTd DataLabel="Dob">@(context.Age?.ToString() ?? "-")</MudTd>
+        <MudTd DataLabel="Dolazak">@(context.ArrivalDate?.ToString("dd.MM.yyyy") ?? "-")</MudTd>
+        <MudTd DataLabel="Status">
+            @if (context.IsAdopted)
+            {
+                <MudChip T="string" Color="Color.Success" Variant="Variant.Filled">Udomljena</MudChip>
+            }
+            else
+            {
+                <MudChip T="string" Color="Color.Warning" Variant="Variant.Filled">U azilu</MudChip>
+            }
         </MudTd>
-        <MudTd>@context.Name</MudTd>
-        <MudTd>@context.Species</MudTd>
-        <MudTd>@context.Breed</MudTd>
-        <MudTd>@context.Gender</MudTd>
-        <MudTd>@context.Age</MudTd>
-        <MudTd>@context.ArrivalDate.ToShortDateString()</MudTd>
-        <MudTd>
-            <MudChip T="string" Color="@(context.IsAdopted ? Color.Success : Color.Warning)">
-                @(context.IsAdopted ? "Udomljena" : "U azilu")
-            </MudChip>
-        </MudTd>
-        <MudTd>
-            <MudButton Variant="Variant.Text" Color="Color.Primary" Href="@($"/animals/edit/{context.Id}")">
+        <MudTd DataLabel="Akcije">
+            <MudButton Variant="Variant.Text" Color="Color.Primary" Size="Size.Small" Href="@($"/animals/edit/{context.Id}")">
                 Uredi
             </MudButton>
-            <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@(() => DeleteAnimal(context.Id))">
+            <MudButton Variant="Variant.Text" Color="Color.Error" Size="Size.Small" OnClick="@(() => DeleteAnimal(context.Id))">
                 Obriši
             </MudButton>
         </MudTd>
     </RowTemplate>
+
+    <NoRecordsContent>
+        <MudText Typo="Typo.body1" Class="pa-4">
+            Nema rezultata za zadane kriterije pretrage i filtera.
+        </MudText>
+    </NoRecordsContent>
 </MudTable>
 
 @code {
-    private List<AnimalDto>
-    animals = new();
+    private List<AnimalDto> animals = new();
+    private string searchString = string.Empty;
+    private string? selectedSpecies;
+    private bool? adoptedFilter;
 
     protected override async Task OnInitializedAsync()
     {
-    var result = await Http.GetFromJsonAsync<List<AnimalDto>>("api/animals");
+        var result = await Http.GetFromJsonAsync<List<AnimalDto>>("api/animals");
         animals = result ?? new List<AnimalDto>();
     }
+
+    private void ResetFilters()
+    {
+        searchString = string.Empty;
+        selectedSpecies = null;
+        adoptedFilter = null;
+    }
+
+    private bool FilterAnimals(AnimalDto animal)
+    {
+        if (!string.IsNullOrWhiteSpace(searchString))
+        {
+            var term = searchString.Trim().ToLower();
+
+            var matchesSearch =
+                (!string.IsNullOrWhiteSpace(animal.Name) && animal.Name.ToLower().Contains(term)) ||
+                (!string.IsNullOrWhiteSpace(animal.Breed) && animal.Breed.ToLower().Contains(term)) ||
+                (!string.IsNullOrWhiteSpace(animal.Description) && animal.Description.ToLower().Contains(term));
+
+            if (!matchesSearch)
+                return false;
+        }
+
+
+
+        if (!string.IsNullOrWhiteSpace(selectedSpecies))
+        {
+            if (!string.Equals(animal.Species, selectedSpecies, StringComparison.OrdinalIgnoreCase))
+                return false;
+        }
+
+        if (adoptedFilter.HasValue)
+        {
+            if (animal.IsAdopted != adoptedFilter.Value)
+                return false;
+        }
+
+        return true;
+    }
+
     private async Task DeleteAnimal(int id)
     {
         var response = await Http.DeleteAsync($"api/animals/{id}");
