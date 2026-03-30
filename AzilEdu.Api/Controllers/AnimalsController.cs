@@ -21,21 +21,23 @@ public class AnimalsController : ControllerBase
     public async Task<ActionResult<List<AnimalDto>>> GetAnimals()
     {
         var animals = await _context.Animals
-            .OrderBy(a => a.Name)
-            .Select(a => new AnimalDto
-            {
-                Id = a.Id,
-                Name = a.Name,
-                Species = a.Species,
-                Breed = a.Breed,
-                Gender = a.Gender,
-                Age = a.Age,
-                ArrivalDate = a.ArrivalDate,
-                IsAdopted = a.IsAdopted,
-                ImageUrl = a.ImageUrl,
-                Description = a.Description
-            })
-            .ToListAsync();
+         .Include(a => a.AnimalStatus)
+         .OrderBy(a => a.Name)
+         .Select(a => new AnimalDto
+         {
+             Id = a.Id,
+             Name = a.Name,
+             Species = a.Species,
+             Breed = a.Breed,
+             Gender = a.Gender,
+             Age = a.Age,
+             ArrivalDate = a.ArrivalDate,
+             AnimalStatusId = a.AnimalStatusId,
+             Status = a.AnimalStatus != null ? a.AnimalStatus.Name : string.Empty,
+             ImageUrl = a.ImageUrl,
+             Description = a.Description
+         })
+         .ToListAsync();
 
         return Ok(animals);
     }
@@ -43,7 +45,9 @@ public class AnimalsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<AnimalDto>> GetAnimalById(int id)
     {
-        var animal = await _context.Animals.FindAsync(id);
+        var animal = await _context.Animals
+            .Include(a => a.AnimalStatus)
+            .FirstOrDefaultAsync(a => a.Id == id);
 
         if (animal is null)
             return NotFound();
@@ -57,7 +61,8 @@ public class AnimalsController : ControllerBase
             Gender = animal.Gender,
             Age = animal.Age,
             ArrivalDate = animal.ArrivalDate,
-            IsAdopted = animal.IsAdopted,
+            AnimalStatusId = animal.AnimalStatusId,
+            Status = animal.AnimalStatus != null ? animal.AnimalStatus.Name : string.Empty,
             ImageUrl = animal.ImageUrl,
             Description = animal.Description
         };
@@ -76,7 +81,7 @@ public class AnimalsController : ControllerBase
             Gender = dto.Gender,
             Age = dto.Age,
             ArrivalDate = dto.ArrivalDate,
-            IsAdopted = dto.IsAdopted,
+            AnimalStatusId = dto.AnimalStatusId,
             ImageUrl = dto.ImageUrl,
             Description = dto.Description
         };
@@ -84,23 +89,27 @@ public class AnimalsController : ControllerBase
         _context.Animals.Add(animal);
         await _context.SaveChangesAsync();
 
+        var createdAnimal = await _context.Animals
+            .Include(a => a.AnimalStatus)
+            .FirstAsync(a => a.Id == animal.Id);
+
         var result = new AnimalDto
         {
-            Id = animal.Id,
-            Name = animal.Name,
-            Species = animal.Species,
-            Breed = animal.Breed,
-            Gender = animal.Gender,
-            Age = animal.Age,
-            ArrivalDate = animal.ArrivalDate,
-            IsAdopted = animal.IsAdopted,
-            ImageUrl = animal.ImageUrl,
-            Description = animal.Description
+            Id = createdAnimal.Id,
+            Name = createdAnimal.Name,
+            Species = createdAnimal.Species,
+            Breed = createdAnimal.Breed,
+            Gender = createdAnimal.Gender,
+            Age = createdAnimal.Age,
+            ArrivalDate = createdAnimal.ArrivalDate,
+            AnimalStatusId = createdAnimal.AnimalStatusId,
+            Status = createdAnimal.AnimalStatus != null ? createdAnimal.AnimalStatus.Name : string.Empty,
+            ImageUrl = createdAnimal.ImageUrl,
+            Description = createdAnimal.Description
         };
 
-        return CreatedAtAction(nameof(GetAnimalById), new { id = animal.Id }, result);
+        return CreatedAtAction(nameof(GetAnimalById), new { id = createdAnimal.Id }, result);
     }
-
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateAnimal(int id, SaveAnimalDto dto)
     {
@@ -115,7 +124,7 @@ public class AnimalsController : ControllerBase
         animal.Gender = dto.Gender;
         animal.Age = dto.Age;
         animal.ArrivalDate = dto.ArrivalDate;
-        animal.IsAdopted = dto.IsAdopted;
+        animal.AnimalStatusId = dto.AnimalStatusId;
         animal.ImageUrl = dto.ImageUrl;
         animal.Description = dto.Description;
 

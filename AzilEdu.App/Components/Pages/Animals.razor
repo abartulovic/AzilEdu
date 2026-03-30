@@ -37,13 +37,15 @@
         </MudItem>
 
         <MudItem xs="12" md="3">
-            <MudSelect T="bool?"
-                       Label="Status udomljenja"
-                       @bind-Value="adoptedFilter"
+            <MudSelect T="string"
+                       Label="Status"
+                       @bind-Value="selectedStatus"
                        Variant="Variant.Outlined"
                        Clearable="true">
-                <MudSelectItem T="bool?" Value="@((bool?)true)">Udomljene</MudSelectItem>
-                <MudSelectItem T="bool?" Value="@((bool?)false)">Nisu udomljene</MudSelectItem>
+                @foreach (var item in statusList)
+                {
+                    <MudSelectItem T="string" Value="@item.Name">@item.Name</MudSelectItem>
+                }
             </MudSelect>
         </MudItem>
 
@@ -87,8 +89,15 @@
         <MudTd DataLabel="Dob">@(context.Age?.ToString() ?? "-")</MudTd>
         <MudTd DataLabel="Dolazak">@(context.ArrivalDate?.ToShortDateString() ?? "-")</MudTd>
         <MudTd DataLabel="Status">
-            <MudChip T="string" Color="@(context.IsAdopted? Color.Success: Color.Warning)">
-                @(context.IsAdopted ? "Udomljena" : "U azilu")
+            <MudChip T="string"
+                     Color="@(context.Status switch
+                     {
+                         "Udomljena" => Color.Success,
+                         "Rezervirana" => Color.Info,
+                         "Na liječenju" => Color.Error,
+                         _ => Color.Warning
+                     })">
+                @context.Status
             </MudChip>
         </MudTd>
         <MudTd DataLabel="Akcije">
@@ -110,14 +119,16 @@
 
 @code {
     private List<AnimalDto> animals = new();
+    private List<LookupDto> statusList = new();
     private string searchString = string.Empty;
     private string? selectedSpecies;
-    private bool? adoptedFilter;
+    private string? selectedStatus;
 
     protected override async Task OnInitializedAsync()
     {
         List<AnimalDto>? result = await Http.GetFromJsonAsync<List<AnimalDto>>("api/animals");
         animals = result ?? new List<AnimalDto>();
+        statusList = await Http.GetFromJsonAsync<List<LookupDto>>("api/animalstatuses") ?? new();
     }
 
     private bool FilterAnimals(AnimalDto animal)
@@ -153,7 +164,8 @@
             }
         }
 
-        if (adoptedFilter.HasValue && animal.IsAdopted != adoptedFilter.Value)
+        if (!string.IsNullOrWhiteSpace(selectedStatus) &&
+     !string.Equals(animal.Status, selectedStatus, StringComparison.OrdinalIgnoreCase))
         {
             return false;
         }
@@ -165,7 +177,7 @@
     {
         searchString = string.Empty;
         selectedSpecies = null;
-        adoptedFilter = null;
+        selectedStatus = null;
     }
 
     private async Task DeleteAnimal(int id)

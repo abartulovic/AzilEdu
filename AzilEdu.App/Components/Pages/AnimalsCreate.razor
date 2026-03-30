@@ -18,7 +18,15 @@
         <MudTextField @bind-Value="model.Gender" Label="Spol" />
         <MudNumericField @bind-Value="model.Age" Label="Dob" />
         <MudDatePicker @bind-Date="arrivalDate" Label="Datum dolaska" />
-        <MudCheckBox @bind-Value="model.IsAdopted" Label="Udomljena" />
+        <MudSelect T="int"
+                   Label="Status"
+                   @bind-Value="model.AnimalStatusId"
+                   Required="true">
+            @foreach (var item in statusList)
+            {
+                <MudSelectItem T="int" Value="@item.Id">@item.Name</MudSelectItem>
+            }
+        </MudSelect>
         <MudTextField @bind-Value="model.ImageUrl" Label="Putanja slike" />
         <MudTextField @bind-Value="model.Description" Label="Opis" Lines="3" />
 
@@ -29,23 +37,36 @@
 </EditForm>
 
 @code {
-    private SaveAnimalDto model = new()
-    {
-        ArrivalDate = DateTime.Today,
-        ImageUrl = "/images/animals/placeholder.webp"
-    };
+  
 
+    private SaveAnimalDto model = new();
+    private List<LookupDto> statusList = new();
     private DateTime? arrivalDate = DateTime.Today;
 
+    protected override async Task OnInitializedAsync()
+    {
+        statusList = await Http.GetFromJsonAsync<List<LookupDto>>("api/animalstatuses") ?? new();
+    }
+    // Metoda za spremanje nove životinje
     private async Task SaveAnimal()
     {
-        model.ArrivalDate = arrivalDate;
-
+        if (arrivalDate.HasValue)
+        {
+            model.ArrivalDate = arrivalDate.Value;
+        }
         var response = await Http.PostAsJsonAsync("api/animals", model);
-
         if (response.IsSuccessStatusCode)
         {
             Navigation.NavigateTo("/animals");
         }
+        else
+        {
+            // Ovdje možete dodati logiku za prikaz greške korisniku
+            Console.WriteLine("Greška prilikom spremanja životinje.");
+        }
     }
+
+ 
+
+   
 }
