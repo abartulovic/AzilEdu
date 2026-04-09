@@ -11,9 +11,10 @@ namespace AzilEdu.Api.Data
         }
         public DbSet<Animal> Animals => Set<Animal>();
         public DbSet<AnimalStatus> AnimalStatuses => Set<AnimalStatus>();
+        public DbSet<Species> Species => Set<Species>();
 
- 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
